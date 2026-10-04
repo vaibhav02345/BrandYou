@@ -1,0 +1,467 @@
+/* ================================================================
+   NEON MATRIX — Exact Kombai Design Replica
+   Background: #0d1117 (very dark blue/black)
+   Outer bg: even darker
+   Terminal card: #161b22 dark with subtle border
+   VS Code status: #7c3aed purple
+   Accent: cyan #00d8ff / purple #8b5cf6
+   Font: JetBrains Mono / monospace
+   ================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+/* ── Modal Overlay ── */
+.nm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: nmFadeIn 0.2s ease;
+}
+@keyframes nmFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Modal Container ── */
+.nm-modal {
+  width: 96vw;
+  max-width: 1280px;
+  height: 92vh;
+  background: #0d1117;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 0 80px rgba(139,92,246,0.15), 0 40px 80px rgba(0,0,0,0.7);
+  animation: nmSlideUp 0.3s cubic-bezier(0.34,1.4,0.64,1);
+}
+@keyframes nmSlideUp {
+  from { transform: translateY(24px) scale(0.98); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* ── Title Bar (VS Code top chrome) ── */
+.nm-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  height: 38px;
+  background: #1c2128;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+.nm-titlebar-dots { display: flex; gap: 6px; align-items: center; }
+.nm-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.nm-dot-red    { background: #ff5f57; }
+.nm-dot-yellow { background: #febc2e; }
+.nm-dot-green  { background: #28c840; }
+.nm-titlebar-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: rgba(205,217,229,0.5);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.nm-x-btn {
+  width: 26px; height: 26px;
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  color: rgba(205,217,229,0.4);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.nm-x-btn:hover { background: rgba(255,80,80,0.2); color: #ff5f57; border-color: rgba(255,80,80,0.3); }
+
+.nm-modal-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.nm-modal-close:hover {
+  background: rgba(255,255,255,0.1);
+}
+/* ── VS Code Status Bar ── */
+.nm-statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.75rem;
+  height: 24px;
+  background: #7c3aed;
+  flex-shrink: 0;
+}
+.nm-statusbar-bottom { /* same but at bottom, handled by flex order */ }
+.nm-sb-left  { display: flex; gap: 1rem; }
+.nm-sb-right { display: flex; gap: 1rem; }
+.nm-sb-left span,
+.nm-sb-right span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.02em;
+}
+.nm-sb-git  { color: rgba(255,255,255,0.85); }
+.nm-sb-sync { color: rgba(255,255,255,0.7); }
+.nm-sb-js   { color: #fbbf24; }
+
+/* ── Scrollable content ── */
+.nm-scroll {
+  flex: 1;
+  overflow-y: auto;
+  background: #0a0d14;
+}
+.nm-scroll::-webkit-scrollbar { width: 5px; }
+.nm-scroll::-webkit-scrollbar-track { background: #0a0d14; }
+.nm-scroll::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.35); border-radius: 3px; }
+
+/* ── Sections wrapper ── */
+.nm-section {
+  padding: 4rem 5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+.nm-section-hero { padding-top: 0; }
+
+/* ══════════════════════
+   HERO — WHOAMI
+══════════════════════ */
+@keyframes nmFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+.nm-window {
+  background: #161b22;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  margin-top: 3.5rem;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  animation: nmFloat 6s ease-in-out infinite;
+}
+.nm-window-content {
+  padding: 2.5rem 3rem;
+}
+.nm-prompt-line {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+.nm-dollar { color: #00d8ff; font-weight: 600; }
+.nm-cmd { color: #cdd9e5; }
+.nm-cursor {
+  display: inline-block;
+  width: 10px;
+  height: 1.1em;
+  background: transparent;
+  color: transparent;
+  margin-left: 2px;
+  transition: none;
+}
+.nm-cursor.nm-cursor-on {
+  background: #cdd9e5;
+  color: #cdd9e5;
+}
+
+.nm-hero-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 700;
+  color: #8b5cf6;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(139, 92, 246, 0.4), 0 0 40px rgba(139, 92, 246, 0.2);
+}
+.nm-hero-role {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+.nm-role-key  { color: #00d8ff; font-weight: 600; }
+.nm-role-val  { color: #cdd9e5; font-style: italic; font-weight: 400; }
+
+.nm-hero-desc {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: rgba(205,217,229,0.55);
+  margin: 0;
+  max-width: 500px;
+}
+
+/* ══════════════════════
+   SECTION HEADERS
+══════════════════════ */
+.nm-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e6edf3;
+  margin-bottom: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.nm-sh-icon {
+  font-style: normal;
+  font-size: 1rem;
+}
+.nm-sh-icon--cyan { color: #00d8ff; }
+.nm-sh-icon--gear { color: #00d8ff; }
+.nm-sh-icon--list { color: #f59e0b; }
+.nm-sh-icon--git  { color: #00d8ff; }
+.nm-sh-cmd { color: #e6edf3; }
+
+/* ══════════════════════
+   CAT ~/.PROFILE
+══════════════════════ */
+.nm-two-col {
+  display: grid;
+  gap: 2.5rem;
+}
+.nm-profile-row { grid-template-columns: 1fr 0.55fr; }
+
+/* JSON Block */
+.nm-json-block {
+  background: #161b22;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 1.75rem 2rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  line-height: 1.8;
+}
+.nm-json-line { display: block; white-space: pre-wrap; word-break: break-word; }
+.nm-indent  { padding-left: 1.5rem; }
+.nm-indent2 { padding-left: 3rem; }
+.nm-json-brace  { color: rgba(205,217,229,0.6); }
+.nm-json-key    { color: #8b5cf6; }
+.nm-json-colon  { color: rgba(205,217,229,0.6); }
+.nm-json-str    { color: #f59e0b; }
+.nm-json-num    { color: #00d8ff; }
+.nm-json-comma  { color: rgba(205,217,229,0.4); }
+
+/* Socials */
+.nm-socials { display: flex; flex-direction: column; gap: 0; }
+.nm-socials-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: rgba(205,217,229,0.3);
+  letter-spacing: 0.15em;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+.nm-social-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: #161b22;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.nm-social-item:hover { background: #1c2128; border-color: rgba(255,255,255,0.12); }
+.nm-social-cmd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  color: #e6edf3;
+}
+.nm-social-icon { color: rgba(205,217,229,0.45); }
+
+/* ══════════════════════
+   PRINTENV SKILLS
+══════════════════════ */
+.nm-env-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.nm-env-card {
+  background: #161b22;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border-top: 2.5px solid transparent;
+}
+.nm-env-card--purple { border-color: #8b5cf6; }
+.nm-env-card--cyan   { border-color: #00d8ff; }
+.nm-env-card--gray   { border-color: rgba(205,217,229,0.2); }
+
+.nm-env-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+.nm-env-label--purple { color: #8b5cf6; }
+.nm-env-label--cyan   { color: #00d8ff; }
+.nm-env-label--gray   { color: rgba(205,217,229,0.4); }
+
+.nm-env-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.nm-env-list li {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  color: rgba(205,217,229,0.85);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nm-env-dot { font-size: 0.55rem; }
+.nm-env-dot--purple { color: #8b5cf6; }
+.nm-env-dot--cyan   { color: #00d8ff; }
+.nm-env-dot--gray   { color: rgba(205,217,229,0.3); }
+
+/* ══════════════════════
+   LS PROJECTS TABLE
+══════════════════════ */
+.nm-table-wrap {
+  background: #161b22;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.nm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+}
+.nm-table thead tr {
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nm-table th {
+  padding: 0.85rem 1.25rem;
+  text-align: left;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: rgba(205,217,229,0.3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.nm-table tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.15s;
+}
+.nm-table tbody tr:last-child { border-bottom: none; }
+.nm-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+.nm-table td {
+  padding: 1.1rem 1.25rem;
+  color: rgba(205,217,229,0.7);
+  vertical-align: middle;
+}
+.nm-perm     { color: #00d8ff !important; }
+.nm-filename { color: #e6edf3 !important; font-weight: 600; }
+.nm-arrow    { color: rgba(205,217,229,0.3) !important; font-size: 1rem; }
+
+/* Tech tags in table */
+.nm-tag {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 3px;
+  margin-right: 4px;
+  letter-spacing: 0.05em;
+}
+.nm-tag--react  { background: rgba(0,216,255,0.15); color: #00d8ff; border: 1px solid rgba(0,216,255,0.25); }
+.nm-tag--gpt    { background: rgba(139,92,246,0.15); color: #a78bfa; border: 1px solid rgba(139,92,246,0.25); }
+.nm-tag--go     { background: rgba(0,216,255,0.15); color: #00d8ff; border: 1px solid rgba(0,216,255,0.25); }
+.nm-tag--redis  { background: rgba(245,101,101,0.15); color: #f87171; border: 1px solid rgba(245,101,101,0.25); }
+.nm-tag--canvas { background: rgba(139,92,246,0.15); color: #a78bfa; border: 1px solid rgba(139,92,246,0.25); }
+.nm-tag--aws    { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.25); }
+
+/* ══════════════════════
+   GIT LOG EXPERIENCE
+══════════════════════ */
+.nm-commits { display: flex; flex-direction: column; gap: 0; }
+.nm-commit {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.nm-commit-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #00d8ff;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+  box-shadow: 0 0 10px rgba(0,216,255,0.5);
+}
+.nm-commit-body { flex: 1; }
+.nm-commit-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  margin-bottom: 0.6rem;
+  color: rgba(205,217,229,0.45);
+}
+.nm-commit-hash { color: #8b5cf6; font-weight: 600; }
+.nm-commit-author, .nm-commit-date { color: rgba(205,217,229,0.45); }
+
+.nm-commit-card {
+  background: #161b22;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+}
+.nm-commit-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #e6edf3;
+  margin-bottom: 0.5rem;
+}
+.nm-commit-desc {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  line-height: 1.7;
+  color: rgba(205,217,229,0.5);
+  margin: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .nm-section { padding: 2.5rem 1.75rem; }
+  .nm-profile-row { grid-template-columns: 1fr; }
+  .nm-env-grid { grid-template-columns: 1fr; }
+  .nm-hero-name { font-size: 3rem; }
+  .nm-window { padding: 1.75rem; }
+}

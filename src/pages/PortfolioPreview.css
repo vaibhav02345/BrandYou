@@ -1,0 +1,821 @@
+/* ================================================================
+   PORTFOLIO PREVIEW MODAL — Matches site design language
+   Colors: --primary #1B3022, --amber #D97706, --bg-primary #F9F7F2
+   Fonts: Bricolage Grotesque (headings), Hanken Grotesk (body)
+   ================================================================ */
+
+/* ── Modal Shell ── */
+.pv-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(27, 48, 34, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pv-fade 0.2s ease;
+}
+
+@keyframes pv-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.pv-modal {
+  width: 92vw;
+  max-width: 1100px;
+  height: 88vh;
+  background: #F9F7F2;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 40px 100px rgba(27,48,34,0.35);
+  animation: pv-up 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@keyframes pv-up {
+  from { transform: translateY(32px) scale(0.97); opacity: 0; }
+  to   { transform: translateY(0)    scale(1);    opacity: 1; }
+}
+
+/* ── Top Bar (browser chrome) ── */
+.pv-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  background: #1B3022;
+  flex-shrink: 0;
+}
+
+.pv-topbar-left { display: flex; align-items: center; gap: 1rem; }
+.pv-browser-dots { display: flex; gap: 6px; }
+.pv-dot { width: 12px; height: 12px; border-radius: 50%; display: block; }
+.pv-dot--red    { background: #ff5f57; }
+.pv-dot--yellow { background: #febc2e; }
+.pv-dot--green  { background: #28c840; }
+
+.pv-url-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 0.3rem 1rem;
+  font-size: 0.72rem;
+  font-family: 'Hanken Grotesk', sans-serif;
+  color: rgba(255,255,255,0.5);
+  min-width: 200px;
+}
+
+.pv-topbar-right { display: flex; align-items: center; gap: 0.75rem; }
+
+.pv-template-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #D97706;
+  background: rgba(217,119,6,0.15);
+  border: 1px solid rgba(217,119,6,0.35);
+  border-radius: 20px;
+  padding: 0.25rem 0.75rem;
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+
+.pv-close-btn {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.6);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.pv-close-btn:hover { background: rgba(255,80,80,0.2); color: #ff5f57; }
+
+.pv-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #F9F7F2;
+}
+.pv-content::-webkit-scrollbar { width: 5px; }
+.pv-content::-webkit-scrollbar-track { background: #F0EDE6; }
+.pv-content::-webkit-scrollbar-thumb { background: #C4BDB2; border-radius: 3px; }
+
+/* ── Platform Handle Badge ── */
+.handle-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  font-family: 'Hanken Grotesk', sans-serif;
+  text-decoration: none;
+  border: 1px solid var(--border, #E2DDD6);
+  background: white;
+  color: var(--text-secondary, #5C5652);
+  transition: all 0.2s;
+  cursor: default;
+}
+.handle-badge:hover { border-color: #1B3022; color: #1B3022; transform: translateY(-1px); }
+.handle-label { color: #9A9490; }
+.handle-val { font-weight: 700; color: #2D2926; }
+.handle-icon { color: #1B3022; }
+
+/* ================================================================
+   SHARED SECTION STYLES (used across all templates)
+   ================================================================ */
+.pv-section { padding: 2rem 2.5rem; border-bottom: 1px solid #E2DDD6; }
+.pv-section:last-child { border-bottom: none; }
+
+.pv-section-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #D97706;
+  font-family: 'Hanken Grotesk', sans-serif;
+  margin-bottom: 1rem;
+}
+
+.pv-section h2 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1B3022;
+  margin: 0 0 0.75rem;
+}
+
+/* ================================================================
+   DEVELOPER TEMPLATE — dark green header, warm body
+   ================================================================ */
+.pv-dev {
+  min-height: 100%;
+  font-family: 'Hanken Grotesk', sans-serif;
+  background: #F9F7F2;
+}
+
+.pv-dev-hero {
+  background: linear-gradient(160deg, #1B3022 0%, #2D5040 100%);
+  padding: 3rem 2.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+
+.pv-dev-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(217,119,6,0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.pv-dev-avatar {
+  position: relative;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.pv-dev-avatar img {
+  width: 90px; height: 90px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid rgba(217,119,6,0.5);
+}
+
+.pv-dev-intro { position: relative; z-index: 1; }
+
+.pv-dev-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 0.75rem;
+}
+.status-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #28c840;
+  box-shadow: 0 0 6px #28c840;
+}
+
+.pv-dev-name {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #F9F7F2;
+  margin: 0 0 0.25rem;
+}
+
+.pv-dev-title { font-size: 0.95rem; color: #D97706; margin: 0; font-weight: 600; }
+.pv-dev-subtitle { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin: 0.15rem 0 0.75rem; }
+
+.pv-dev-meta {
+  display: flex; gap: 1.25rem; flex-wrap: wrap;
+  font-size: 0.72rem; color: rgba(255,255,255,0.5); margin-bottom: 0.75rem;
+}
+.pv-dev-meta span { display: flex; align-items: center; gap: 4px; }
+
+.pv-dev-handles { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+/* Dev body */
+.pv-dev-body { background: #F9F7F2; }
+
+.pv-dev-bio { font-size: 0.9rem; line-height: 1.8; color: #5C5652; margin: 0; max-width: 680px; }
+
+.pv-dev-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+
+.pv-skill-group {}
+.pv-skill-cat {
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: #1B3022; margin-bottom: 0.5rem;
+}
+
+.pv-skill-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.pv-skill-tag {
+  font-size: 0.72rem; padding: 3px 10px; border-radius: 6px;
+  border: 1px solid #E2DDD6; color: #5C5652; background: white;
+}
+
+.pv-dev-projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.25rem;
+}
+
+.pv-dev-project-card {
+  border-radius: 12px;
+  border: 1px solid #E2DDD6;
+  padding: 1.25rem;
+  background: white;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s;
+}
+.pv-dev-project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--grad, linear-gradient(135deg, #1B3022, #D97706));
+}
+.pv-dev-project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(27,48,34,0.12); }
+
+.pv-proj-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+.pv-proj-top h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1rem; font-weight: 700; color: #1B3022; margin: 0; }
+.pv-proj-links { display: flex; gap: 0.4rem; }
+.pv-proj-links a { color: #9A9490; text-decoration: none; transition: color 0.2s; }
+.pv-proj-links a:hover { color: #1B3022; }
+
+.pv-dev-project-card > p { font-size: 0.78rem; color: #5C5652; line-height: 1.6; margin: 0 0 0.75rem; }
+
+.pv-proj-tech { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.pv-proj-tech span {
+  font-size: 0.65rem; font-weight: 600; padding: 2px 8px; border-radius: 4px;
+  background: rgba(27,48,34,0.06); color: #1B3022; border: 1px solid rgba(27,48,34,0.12);
+}
+
+.pv-dev-timeline { display: flex; flex-direction: column; gap: 1.25rem; }
+.pv-timeline-item { display: flex; gap: 1rem; align-items: flex-start; }
+.pv-tl-dot { width: 10px; height: 10px; border-radius: 50%; background: #1B3022; flex-shrink: 0; margin-top: 5px; }
+.pv-tl-top { display: flex; gap: 1rem; align-items: baseline; margin-bottom: 0.2rem; flex-wrap: wrap; }
+.pv-tl-role { font-size: 0.95rem; font-weight: 700; color: #1B3022; font-family: 'Bricolage Grotesque', sans-serif; }
+.pv-tl-period { font-size: 0.7rem; color: #D97706; font-weight: 600; }
+.pv-tl-company { font-size: 0.78rem; color: #9A9490; margin-bottom: 0.3rem; }
+.pv-tl-desc { font-size: 0.8rem; color: #5C5652; line-height: 1.6; margin: 0; }
+
+/* ================================================================
+   DESIGNER TEMPLATE — editorial two-column
+   ================================================================ */
+.pv-design {
+  display: flex;
+  min-height: 100%;
+  font-family: 'Hanken Grotesk', sans-serif;
+  background: #F9F7F2;
+}
+
+.pv-design-sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  background: #1B3022;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.pv-design-sidebar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(217,119,6,0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+.pv-design-avatar-wrap {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(217,119,6,0.5);
+  flex-shrink: 0;
+  position: relative;
+}
+.pv-design-avatar { width: 100%; height: 100%; object-fit: cover; }
+
+.pv-design-name {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 1.2rem; font-weight: 800;
+  color: #F9F7F2; margin: 0; position: relative;
+}
+.pv-design-title { font-size: 0.78rem; color: #D97706; font-weight: 600; margin: 0; position: relative; }
+.pv-design-sub { font-size: 0.7rem; color: rgba(255,255,255,0.45); margin: 0; position: relative; }
+
+.pv-design-handles { display: flex; flex-direction: column; gap: 0.4rem; position: relative; }
+
+.pv-design-contact {
+  display: flex; flex-direction: column; gap: 0.4rem;
+  font-size: 0.7rem; color: rgba(255,255,255,0.45);
+  position: relative;
+}
+.pv-design-contact span { display: flex; align-items: center; gap: 5px; }
+
+.pv-design-skills-list { display: flex; flex-direction: column; gap: 0.6rem; position: relative; }
+.pv-design-skill-item { font-size: 0.72rem; color: rgba(255,255,255,0.6); }
+.pv-design-skill-bar { height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-top: 4px; }
+.pv-design-skill-fill { height: 100%; width: 75%; background: #D97706; border-radius: 2px; }
+
+.pv-design-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.pv-design-bio-block { padding: 2rem 2rem 1.5rem; border-bottom: 1px solid #E2DDD6; }
+.pv-design-bio-block h2 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 1.4rem; font-weight: 800; margin: 0 0 0.75rem; color: #1B3022;
+}
+.pv-design-bio-block p { font-size: 0.88rem; line-height: 1.8; color: #5C5652; margin: 0; }
+
+.pv-design-work { padding: 1.5rem 2rem; border-bottom: 1px solid #E2DDD6; }
+.pv-design-work h2 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 1.4rem; font-weight: 800; margin: 0 0 1.25rem; color: #1B3022;
+}
+
+.pv-design-portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+.pv-design-portfolio-card { border-radius: 10px; overflow: hidden; background: white; border: 1px solid #E2DDD6; transition: all 0.25s; }
+.pv-design-portfolio-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(27,48,34,0.12); }
+
+.pv-design-img-wrap { position: relative; aspect-ratio: 4/3; overflow: hidden; }
+.pv-design-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+.pv-design-portfolio-card:hover .pv-design-img-wrap img { transform: scale(1.05); }
+.pv-design-img-overlay {
+  position: absolute; inset: 0;
+  background: rgba(27,48,34,0.7);
+  display: flex; align-items: center; justify-content: center;
+  color: white; opacity: 0; transition: opacity 0.3s;
+}
+.pv-design-portfolio-card:hover .pv-design-img-overlay { opacity: 1; }
+
+.pv-design-portfolio-info { padding: 0.75rem; }
+.pv-design-portfolio-cat { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #D97706; }
+.pv-design-portfolio-info h3 { font-size: 0.9rem; font-weight: 700; margin: 0.2rem 0; color: #1B3022; font-family: 'Bricolage Grotesque', sans-serif; }
+.pv-design-portfolio-info p { font-size: 0.72rem; color: #5C5652; line-height: 1.5; margin: 0; }
+
+.pv-design-exp { padding: 1.5rem 2rem; }
+.pv-design-exp h2 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.4rem; font-weight: 800; margin: 0 0 1rem; color: #1B3022; }
+.pv-design-exp-item { display: flex; gap: 1.25rem; padding: 0.9rem 0; border-bottom: 1px solid #E2DDD6; }
+.pv-design-exp-item:last-child { border-bottom: none; }
+.pv-design-exp-left { width: 90px; flex-shrink: 0; }
+.pv-design-exp-period { font-size: 0.7rem; color: #9A9490; }
+.pv-design-exp-role { font-size: 0.9rem; font-weight: 700; color: #1B3022; margin-bottom: 0.15rem; }
+.pv-design-exp-co { font-size: 0.75rem; color: #D97706; margin-bottom: 0.3rem; font-weight: 600; }
+.pv-design-exp-right p { font-size: 0.78rem; color: #5C5652; line-height: 1.6; margin: 0; }
+
+/* ================================================================
+   CREATIVE TEMPLATE — full-bleed photo, warm overlay
+   ================================================================ */
+.pv-creative {
+  min-height: 100%;
+  font-family: 'Hanken Grotesk', sans-serif;
+  background: #F9F7F2;
+}
+
+.pv-creative-hero {
+  position: relative;
+  height: 380px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.pv-creative-hero-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+}
+.pv-creative-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(27,48,34,0.92) 0%, rgba(27,48,34,0.3) 70%, transparent 100%);
+}
+.pv-creative-hero-content { position: relative; padding: 2rem 2.5rem; width: 100%; }
+.pv-creative-avatar { width: 65px; height: 65px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(217,119,6,0.6); margin-bottom: 0.75rem; }
+.pv-creative-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.pv-creative-hero-content h1 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 2.4rem; font-weight: 900; letter-spacing: -0.04em; margin: 0 0 0.2rem; color: #F9F7F2; }
+.pv-creative-title { font-size: 0.9rem; color: #D97706; margin: 0; font-weight: 600; }
+.pv-creative-sub { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin: 0.15rem 0 0.75rem; }
+.pv-creative-handles { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.pv-creative-bio { padding: 1.75rem 2.5rem; border-bottom: 1px solid #E2DDD6; }
+.pv-creative-bio-inner p { font-size: 0.9rem; line-height: 1.8; color: #5C5652; margin: 0 0 0.75rem; }
+.pv-creative-contact { display: flex; gap: 1.5rem; font-size: 0.75rem; color: #9A9490; }
+.pv-creative-contact span { display: flex; align-items: center; gap: 4px; }
+
+.pv-creative-skills-section { padding: 1.75rem 2.5rem; border-bottom: 1px solid #E2DDD6; }
+.pv-creative-skills-section h2 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.2rem; font-weight: 800; color: #1B3022; margin: 0 0 0.75rem; }
+.pv-creative-skills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pv-creative-skill { font-size: 0.78rem; padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(27,48,34,0.2); color: #1B3022; background: rgba(27,48,34,0.06); }
+
+.pv-creative-gallery { padding: 1.75rem 2.5rem; border-bottom: 1px solid #E2DDD6; }
+.pv-creative-gallery h2 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.4rem; font-weight: 800; margin: 0 0 1.25rem; color: #1B3022; }
+.pv-creative-masonry { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+.pv-creative-tile { border-radius: 10px; overflow: hidden; cursor: pointer; position: relative; }
+.pv-creative-tile img { width: 100%; height: 180px; object-fit: cover; display: block; transition: transform 0.4s; }
+.pv-creative-tile:hover img { transform: scale(1.05); }
+.pv-creative-tile-info {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(27,48,34,0.9) 0%, transparent 60%);
+  opacity: 0; transition: opacity 0.3s;
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 0.75rem;
+}
+.pv-creative-tile:hover .pv-creative-tile-info { opacity: 1; }
+.pv-creative-tile-cat { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: #D97706; font-weight: 700; }
+.pv-creative-tile-info h3 { font-size: 0.85rem; margin: 0.15rem 0; color: white; }
+.pv-creative-tile-info p { font-size: 0.7rem; color: rgba(255,255,255,0.65); margin: 0; }
+
+.pv-creative-exp { padding: 1.75rem 2.5rem; }
+.pv-creative-exp h2 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.2rem; font-weight: 800; color: #1B3022; margin: 0 0 1rem; }
+.pv-creative-exp-item { display: flex; gap: 1.5rem; padding: 0.75rem 0; border-bottom: 1px solid #E2DDD6; }
+.pv-creative-exp-item:last-child { border-bottom: none; }
+.pv-creative-exp-period { font-size: 0.7rem; color: #9A9490; width: 110px; flex-shrink: 0; padding-top: 2px; }
+.pv-creative-exp-item > div strong { font-size: 0.88rem; color: #1B3022; }
+.pv-creative-exp-item > div p { font-size: 0.76rem; color: #5C5652; line-height: 1.5; margin: 0.2rem 0 0; }
+
+/* ================================================================
+   PROFESSIONAL TEMPLATE — executive, metrics-forward
+   ================================================================ */
+.pv-pro {
+  min-height: 100%;
+  font-family: 'Hanken Grotesk', sans-serif;
+  background: #F9F7F2;
+}
+
+.pv-pro-header {
+  background: linear-gradient(160deg, #1B3022 0%, #2D5040 100%);
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.pv-pro-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(217,119,6,0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.pv-pro-header-inner { display: flex; gap: 2rem; align-items: flex-start; margin-bottom: 1.5rem; position: relative; }
+.pv-pro-avatar-wrap { flex-shrink: 0; width: 85px; height: 85px; border-radius: 12px; overflow: hidden; border: 2px solid rgba(217,119,6,0.5); }
+.pv-pro-avatar { width: 100%; height: 100%; object-fit: cover; }
+
+.pv-pro-intro h1 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 0.25rem; color: #F9F7F2; }
+.pv-pro-title { font-size: 0.9rem; color: #D97706; margin: 0; font-weight: 600; }
+.pv-pro-sub { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0.15rem 0 0.5rem; }
+.pv-pro-creds { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.pv-pro-cred {
+  font-size: 0.62rem; font-weight: 700; padding: 3px 8px; border-radius: 4px;
+  background: rgba(217,119,6,0.15); color: #D97706; border: 1px solid rgba(217,119,6,0.3);
+}
+.pv-pro-contact-row { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.7rem; color: rgba(255,255,255,0.45); }
+.pv-pro-contact-row span { display: flex; align-items: center; gap: 4px; }
+.pv-pro-handles-row { display: flex; gap: 0.4rem; flex-wrap: wrap; position: relative; }
+
+.pv-pro-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: white;
+  border-bottom: 1px solid #E2DDD6;
+}
+.pv-pro-metric { padding: 1.25rem 1.5rem; text-align: center; border-right: 1px solid #E2DDD6; }
+.pv-pro-metric:last-child { border-right: none; }
+.pv-pro-metric-num { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.6rem; font-weight: 800; color: #1B3022; letter-spacing: -0.03em; }
+.pv-pro-metric-label { font-size: 0.68rem; color: #9A9490; margin-top: 0.2rem; }
+
+.pv-pro-section { padding: 1.75rem 2.5rem; border-bottom: 1px solid #E2DDD6; }
+.pv-pro-section:last-child { border-bottom: none; }
+.pv-pro-section-title { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #D97706; margin: 0 0 1rem; }
+.pv-pro-bio { font-size: 0.9rem; line-height: 1.8; color: #5C5652; max-width: 720px; margin: 0; }
+
+.pv-pro-expertise { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pv-pro-expertise-tag {
+  font-size: 0.78rem; padding: 5px 14px; border-radius: 6px;
+  background: white; border: 1px solid #E2DDD6; color: #5C5652;
+}
+
+.pv-pro-exp-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+.pv-pro-exp-bar { width: 3px; background: linear-gradient(180deg, #1B3022, #D97706); border-radius: 3px; flex-shrink: 0; }
+.pv-pro-exp-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.2rem; }
+.pv-pro-exp-role { font-size: 0.95rem; font-weight: 700; color: #1B3022; font-family: 'Bricolage Grotesque', sans-serif; }
+.pv-pro-exp-period { font-size: 0.7rem; color: #D97706; font-weight: 600; }
+.pv-pro-exp-co { font-size: 0.78rem; color: #9A9490; margin-bottom: 0.4rem; }
+.pv-pro-exp-body p { font-size: 0.8rem; color: #5C5652; line-height: 1.6; margin: 0; }
+
+/* ================================================================
+   HEALTHCARE TEMPLATE — clinical green
+   ================================================================ */
+.pv-health {
+  min-height: 100%;
+  font-family: 'Hanken Grotesk', sans-serif;
+  background: #F9F7F2;
+}
+
+.pv-health-header {
+  display: flex; gap: 2rem; align-items: flex-start;
+  padding: 2.5rem;
+  background: linear-gradient(160deg, #1B3022 0%, #2D5040 100%);
+  border-bottom: 3px solid #D97706;
+  position: relative; overflow: hidden;
+}
+.pv-health-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(217,119,6,0.1) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+.pv-health-avatar-wrap { width: 85px; height: 85px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(217,119,6,0.5); flex-shrink: 0; position: relative; }
+.pv-health-avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+.pv-health-intro { flex: 1; position: relative; }
+.pv-health-intro h1 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.25rem; color: #F9F7F2; }
+.pv-health-title { font-size: 0.9rem; color: #D97706; margin: 0; font-weight: 600; }
+.pv-health-sub { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0.15rem 0 0.5rem; }
+.pv-health-creds { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.pv-health-cred {
+  font-size: 0.62rem; font-weight: 700; padding: 3px 8px; border-radius: 4px;
+  background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.2);
+}
+.pv-health-contact-block { display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.7rem; color: rgba(255,255,255,0.5); position: relative; }
+.pv-health-contact-block div { display: flex; align-items: center; gap: 5px; }
+
+.pv-health-handles { display: flex; gap: 0.4rem; flex-wrap: wrap; padding: 1rem 2.5rem; background: white; border-bottom: 1px solid #E2DDD6; }
+
+.pv-health-section { padding: 1.75rem 2.5rem; border-bottom: 1px solid #E2DDD6; }
+.pv-health-section:last-child { border-bottom: none; }
+.pv-health-section h2 { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #D97706; margin: 0 0 0.75rem; }
+.pv-health-section > p { font-size: 0.9rem; line-height: 1.8; color: #5C5652; margin: 0; }
+
+.pv-health-specs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pv-health-spec { font-size: 0.78rem; padding: 5px 14px; border-radius: 20px; background: rgba(27,48,34,0.07); border: 1px solid rgba(27,48,34,0.15); color: #1B3022; }
+
+.pv-health-pubs { display: flex; flex-direction: column; gap: 0.75rem; }
+.pv-health-pub { background: white; border: 1px solid #E2DDD6; border-radius: 8px; padding: 1rem 1.25rem; border-left: 3px solid #1B3022; }
+.pv-health-pub-title { font-size: 0.85rem; font-weight: 600; color: #1B3022; margin-bottom: 0.35rem; line-height: 1.4; }
+.pv-health-pub-meta { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.pv-health-pub-journal { font-size: 0.7rem; color: #D97706; font-style: italic; font-weight: 600; }
+.pv-health-pub-year { font-size: 0.68rem; color: #9A9490; }
+.pv-health-pub-cite { font-size: 0.68rem; color: #9A9490; }
+
+.pv-health-exp { background: white; border: 1px solid #E2DDD6; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 0.75rem; }
+.pv-health-exp-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.2rem; }
+.pv-health-exp-top strong { font-size: 0.9rem; color: #1B3022; }
+.pv-health-exp-top span { font-size: 0.7rem; color: #D97706; font-weight: 600; }
+.pv-health-exp-co { font-size: 0.75rem; color: #9A9490; margin-bottom: 0.35rem; }
+.pv-health-exp p { font-size: 0.78rem; color: #5C5652; line-height: 1.6; margin: 0; }
+
+/* ================================================================
+   LEGAL TEMPLATE — formal, dark, authoritative
+   ================================================================ */
+.pv-legal {
+  min-height: 100%;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  background: #F9F7F2;
+}
+
+.pv-legal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 2rem 2.5rem;
+  background: #1B3022;
+  border-bottom: 2px solid #D97706;
+  position: relative; overflow: hidden;
+}
+.pv-legal-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(217,119,6,0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.pv-legal-crest { font-size: 2.5rem; color: rgba(217,119,6,0.5); flex-shrink: 0; position: relative; }
+.pv-legal-name-block { flex: 1; text-align: center; position: relative; }
+.pv-legal-name-block h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: 0.04em; margin: 0 0 0.4rem; color: #F9F7F2; }
+.pv-legal-divider { width: 100px; height: 1px; background: rgba(217,119,6,0.4); margin: 0.4rem auto; }
+.pv-legal-title { font-size: 0.82rem; color: rgba(249,247,242,0.6); margin: 0; font-family: 'Hanken Grotesk', sans-serif; }
+.pv-legal-sub { font-size: 0.7rem; color: rgba(217,119,6,0.7); margin: 0.15rem 0 0; letter-spacing: 0.05em; font-family: 'Hanken Grotesk', sans-serif; }
+
+.pv-legal-avatar-wrap { width: 75px; height: 75px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(217,119,6,0.4); flex-shrink: 0; position: relative; }
+.pv-legal-avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+.pv-legal-contact-bar {
+  display: flex; justify-content: center; gap: 2rem;
+  padding: 0.75rem 2.5rem;
+  background: white;
+  border-bottom: 1px solid #E2DDD6;
+  font-size: 0.7rem; color: #9A9490;
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+.pv-legal-contact-bar span { display: flex; align-items: center; gap: 4px; }
+
+.pv-legal-handles { display: flex; gap: 0.4rem; flex-wrap: wrap; padding: 0.75rem 2.5rem; border-bottom: 1px solid #E2DDD6; background: white; }
+
+.pv-legal-body { display: grid; grid-template-columns: 1fr 1fr; }
+.pv-legal-left { padding: 2rem 1.75rem 2rem 2.5rem; border-right: 1px solid #E2DDD6; }
+.pv-legal-right { padding: 2rem 2.5rem 2rem 1.75rem; }
+
+.pv-legal-section { margin-bottom: 1.75rem; }
+.pv-legal-section h2 {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: #D97706; margin: 0 0 0.75rem;
+  border-bottom: 1px solid #E2DDD6; padding-bottom: 0.35rem;
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+.pv-legal-section p { font-size: 0.83rem; line-height: 1.8; color: #5C5652; margin: 0; font-family: 'Hanken Grotesk', sans-serif; }
+
+.pv-legal-creds { padding-left: 1rem; margin: 0; }
+.pv-legal-creds li { font-size: 0.8rem; color: #5C5652; margin-bottom: 0.4rem; font-family: 'Hanken Grotesk', sans-serif; }
+
+.pv-legal-exp { margin-bottom: 1.25rem; }
+.pv-legal-exp strong { font-size: 0.9rem; color: #1B3022; font-family: 'Bricolage Grotesque', sans-serif; }
+.pv-legal-exp-co { font-size: 0.72rem; color: #D97706; margin: 0.15rem 0; font-family: 'Hanken Grotesk', sans-serif; font-weight: 600; }
+.pv-legal-exp p { font-size: 0.78rem; color: #5C5652; line-height: 1.6; margin: 0; font-family: 'Hanken Grotesk', sans-serif; }
+
+.pv-legal-areas { padding-left: 1rem; margin: 0; }
+.pv-legal-areas li { font-size: 0.8rem; color: #5C5652; margin-bottom: 0.4rem; font-family: 'Hanken Grotesk', sans-serif; }
+
+.pv-legal-matter {
+  border-left: 3px solid #1B3022; padding: 0.75rem 1rem; margin-bottom: 0.9rem;
+  background: white; border-radius: 0 8px 8px 0;
+}
+.pv-legal-matter-val { font-size: 1.3rem; font-weight: 800; color: #1B3022; letter-spacing: -0.02em; font-family: 'Bricolage Grotesque', sans-serif; }
+.pv-legal-matter-deal { font-size: 0.76rem; color: #5C5652; margin: 0.2rem 0; font-family: 'Hanken Grotesk', sans-serif; }
+.pv-legal-matter-type { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: #D97706; font-weight: 700; font-family: 'Hanken Grotesk', sans-serif; }
+
+/* ================================================================
+   ENTERTAINMENT TEMPLATE — bold, cinematic but warm
+   ================================================================ */
+.pv-ent {
+  min-height: 100%;
+  font-family: 'Hanken Grotesk', sans-serif;
+  background: #F9F7F2;
+}
+
+.pv-ent-hero {
+  position: relative;
+  height: 400px;
+  background: linear-gradient(160deg, #1B3022 0%, #2D2926 100%);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.pv-ent-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(217,119,6,0.12) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.pv-ent-hero-content { text-align: center; position: relative; z-index: 1; }
+.pv-ent-avatar { width: 90px; height: 90px; border-radius: 50%; overflow: hidden; border: 3px solid #D97706; margin: 0 auto 1rem; box-shadow: 0 0 0 6px rgba(217,119,6,0.15); }
+.pv-ent-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.pv-ent-name { font-family: 'Bricolage Grotesque', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: -0.04em; margin: 0 0 0.25rem; color: #F9F7F2; }
+.pv-ent-title { font-size: 0.95rem; color: rgba(255,255,255,0.55); margin: 0; }
+.pv-ent-sub { font-size: 0.8rem; color: #D97706; margin: 0.25rem 0 1rem; font-weight: 600; }
+.pv-ent-handles { display: flex; gap: 0.4rem; justify-content: center; flex-wrap: wrap; }
+
+.pv-ent-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: white; border-bottom: 1px solid #E2DDD6;
+}
+.pv-ent-stat { padding: 1.25rem; text-align: center; border-right: 1px solid #E2DDD6; }
+.pv-ent-stat:last-child { border-right: none; }
+.pv-ent-stat-num { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.6rem; font-weight: 800; color: #1B3022; letter-spacing: -0.03em; }
+.pv-ent-stat-label { font-size: 0.65rem; color: #9A9490; margin-top: 0.15rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+.pv-ent-section { padding: 1.75rem 2.5rem; border-bottom: 1px solid #E2DDD6; }
+.pv-ent-section:last-child { border-bottom: none; }
+.pv-ent-section h2 { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #D97706; margin: 0 0 1rem; }
+.pv-ent-section > p { font-size: 0.9rem; line-height: 1.8; color: #5C5652; margin: 0 0 0.75rem; max-width: 680px; }
+.pv-ent-contact { display: flex; gap: 1.5rem; font-size: 0.75rem; color: #9A9490; }
+.pv-ent-contact span { display: flex; align-items: center; gap: 4px; }
+
+.pv-ent-credits { display: flex; flex-direction: column; gap: 0.75rem; }
+.pv-ent-credit-card {
+  display: flex; gap: 1rem; align-items: flex-start;
+  background: white; border: 1px solid #E2DDD6;
+  border-radius: 10px; padding: 1.25rem; transition: all 0.2s;
+}
+.pv-ent-credit-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27,48,34,0.1); }
+.pv-ent-credit-num { font-family: 'Bricolage Grotesque', sans-serif; font-size: 2rem; font-weight: 900; color: rgba(27,48,34,0.1); flex-shrink: 0; width: 40px; }
+.pv-ent-credit-body h3 { font-size: 1rem; font-weight: 700; margin: 0 0 0.2rem; color: #1B3022; font-family: 'Bricolage Grotesque', sans-serif; }
+.pv-ent-credit-type { font-size: 0.72rem; color: #9A9490; margin-bottom: 0.2rem; }
+.pv-ent-credit-role { font-size: 0.75rem; color: #D97706; font-weight: 600; }
+
+.pv-ent-exp { display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start; }
+.pv-ent-exp-dot { width: 8px; height: 8px; border-radius: 50%; background: #D97706; flex-shrink: 0; margin-top: 5px; }
+.pv-ent-exp > div strong { font-size: 0.9rem; color: #1B3022; }
+.pv-ent-exp-period { font-size: 0.7rem; color: #9A9490; margin: 0.1rem 0 0.3rem; }
+.pv-ent-exp > div p { font-size: 0.78rem; color: #5C5652; line-height: 1.6; margin: 0; }
+
+/* ================================================================
+   STUDENT TEMPLATE — friendly, clean
+   ================================================================ */
+.pv-student {
+  min-height: 100%;
+  font-family: 'Hanken Grotesk', sans-serif;
+  background: #F9F7F2;
+}
+
+.pv-student-hero {
+  display: flex; gap: 2rem; align-items: flex-start;
+  padding: 2.5rem;
+  background: linear-gradient(160deg, #1B3022 0%, #2D5040 100%);
+  border-bottom: 2px solid #D97706;
+  position: relative; overflow: hidden;
+}
+.pv-student-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(217,119,6,0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.pv-student-avatar { width: 85px; height: 85px; border-radius: 12px; overflow: hidden; border: 2px solid rgba(217,119,6,0.5); flex-shrink: 0; position: relative; }
+.pv-student-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.pv-student-intro { position: relative; }
+.pv-student-intro h1 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 0.25rem; color: #F9F7F2; }
+.pv-student-title { font-size: 0.9rem; color: #D97706; margin: 0; font-weight: 600; }
+.pv-student-sub { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0.15rem 0 0.6rem; }
+.pv-student-meta { display: flex; gap: 1rem; font-size: 0.7rem; color: rgba(255,255,255,0.45); margin-bottom: 0.75rem; }
+.pv-student-meta span { display: flex; align-items: center; gap: 4px; }
+.pv-student-handles { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.pv-student-section { padding: 1.75rem 2.5rem; border-bottom: 1px solid #E2DDD6; }
+.pv-student-section:last-child { border-bottom: none; }
+.pv-student-section h2 { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #D97706; margin: 0 0 0.75rem; }
+.pv-student-section > p { font-size: 0.9rem; line-height: 1.8; color: #5C5652; margin: 0; }
+
+.pv-student-skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1rem; }
+.pv-student-skill-cat { font-size: 0.65rem; font-weight: 700; color: #1B3022; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+.pv-student-skill-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.pv-student-skill { font-size: 0.72rem; padding: 3px 10px; border-radius: 6px; background: white; border: 1px solid #E2DDD6; color: #5C5652; }
+
+.pv-student-projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+.pv-student-project { border-radius: 12px; overflow: hidden; border: 1px solid #E2DDD6; background: white; transition: all 0.25s; }
+.pv-student-project:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(27,48,34,0.1); }
+.pv-student-proj-gradient { height: 4px; background: var(--grad, linear-gradient(135deg, #1B3022, #D97706)); }
+.pv-student-proj-body { padding: 1.25rem; }
+.pv-student-proj-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+.pv-student-proj-top h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 0.95rem; font-weight: 700; color: #1B3022; margin: 0; }
+.pv-student-proj-links { display: flex; gap: 0.4rem; }
+.pv-student-proj-links a { color: #9A9490; text-decoration: none; transition: color 0.2s; }
+.pv-student-proj-links a:hover { color: #1B3022; }
+.pv-student-proj-body > p { font-size: 0.76rem; color: #5C5652; line-height: 1.5; margin: 0 0 0.75rem; }
+.pv-student-proj-tech { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.pv-student-proj-tech span { font-size: 0.62rem; padding: 2px 7px; border-radius: 4px; background: rgba(27,48,34,0.06); color: #1B3022; border: 1px solid rgba(27,48,34,0.12); font-weight: 600; }
+
+.pv-student-exp { margin-bottom: 1rem; padding: 1rem; background: white; border-radius: 8px; border: 1px solid #E2DDD6; }
+.pv-student-exp-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.2rem; }
+.pv-student-exp-top strong { font-size: 0.9rem; color: #1B3022; }
+.pv-student-exp-top span { font-size: 0.7rem; color: #D97706; font-weight: 600; }
+.pv-student-exp-co { font-size: 0.75rem; color: #9A9490; margin-bottom: 0.3rem; }
+.pv-student-exp p { font-size: 0.78rem; color: #5C5652; line-height: 1.6; margin: 0; }
