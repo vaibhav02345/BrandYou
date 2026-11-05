@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sparkles, FileText } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -69,8 +69,6 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
             >
               {l.label}
-              {l.label === 'Builder' && <Sparkles size={12} className="link-icon-new" />}
-              {l.label === 'Resumes' && <FileText size={12} className="link-icon-new" />}
             </Link>
           ))}
           <Link to="/builder" className="navbar__cta" onClick={() => setMenuOpen(false)}>
