@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { X, GitBranch, Link2, Mail, MapPin, Globe, ExternalLink, AtSign, Hash, Play } from 'lucide-react';
 import { PORTFOLIO_SAMPLE_DATA } from '../data/portfolioSampleData';
+import EditorialDesignerTemplate from './EditorialDesignerTemplate';
 import './PortfolioPreview.css';
 
 /* ─── Platform Handle Badge ─────────────────────────────────────── */
@@ -653,6 +654,10 @@ const CATEGORY_MAP = {
 };
 
 function renderTemplate(template) {
+  if (template.id === 'design-minimal') {
+    return <EditorialDesignerTemplate data={PORTFOLIO_SAMPLE_DATA.designer} />;
+  }
+
   const category = CATEGORY_MAP[template.id] || 'developer';
   const data = PORTFOLIO_SAMPLE_DATA[category];
   switch (category) {

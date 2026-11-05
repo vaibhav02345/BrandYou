@@ -48,8 +48,17 @@ export default function Navbar() {
     <nav className={navClass}>
       <div className="navbar__progress" style={{ width: `${scrollProgress}%` }} />
       
-      <div className="navbar__inner container">
-
+      <div className={`navbar__inner container ${isHome ? 'navbar__inner--home' : ''}`}>
+        {!isHome && (
+          <Link to="/" className="navbar__brand" aria-label="BrandYou Home">
+            <div className="navbar__logo">
+              <img src="/brandyou-icon.png" alt="BrandYou Logo" className="navbar__logo-img" />
+            </div>
+            <span className="navbar__brandname">
+              BRAND<span className="brand-accent">YOU</span>
+            </span>
+          </Link>
+        )}
 
         <div className={`navbar__links ${menuOpen ? 'navbar__links--open' : ''}`}>
           {links.map(l => (

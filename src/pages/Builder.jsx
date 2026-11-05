@@ -57,7 +57,7 @@ export default function Builder() {
                   <Globe size={28} className="golive-globe" />
                 </div>
                 <h2 className="golive-heading">Publishing Your Site</h2>
-                <p className="golive-sub">Hang tight — this only takes a moment.</p>
+                <p className="golive-sub">Hang tight â€” this only takes a moment.</p>
                 <div className="golive-steps">
                   {PUBLISH_STEPS.map((s, i) => (
                     <div key={i} className={`golive-step ${i < publishStep ? 'done' : i === publishStep ? 'active' : ''}`}>
@@ -173,7 +173,7 @@ export default function Builder() {
               <span>Senior Designer at TechCorp</span>
               <Trash2 size={14} color="rgba(255,255,255,0.3)" style={{ cursor: 'pointer' }} />
             </div>
-            <div className="item-card-date">2022 – Present</div>
+            <div className="item-card-date">2022 â€“ Present</div>
           </div>
         </div>
         <div className="builder-sidebar-footer">

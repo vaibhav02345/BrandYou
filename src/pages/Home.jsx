@@ -149,6 +149,7 @@ export default function Home() {
           
           <div className="hero-content">
             <div className="hero-badge">
+              <img src="/brandyou-icon.png" alt="BrandYou" className="hero-badge-logo" />
               <span className="hero-badge-brand">Brand You</span>
               <div className="hero-badge-dot" />
               <span className="hero-badge-text">Templates Drop</span>
@@ -446,9 +447,9 @@ export default function Home() {
           <div className="footer-inner">
             <div className="footer-logo-row">
               <div className="footer-logo-box">
-                <span className="footer-logo-letter">B</span>
+                <img src="/brandyou-icon.png" alt="BrandYou Logo" className="footer-logo-img" />
               </div>
-              <h2 className="footer-brand-title">BRAND YOU</h2>
+              <h2 className="footer-brand-title">BRAND<span style={{ color: 'var(--amber)' }}>YOU</span></h2>
             </div>
             <p className="footer-tagline">The world's leading platform for personal branding. Templates, hosting, and professional exports all in one place.</p>
             <button className="btn-footer-cta">
